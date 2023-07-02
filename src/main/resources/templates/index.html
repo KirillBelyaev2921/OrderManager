@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products List</title>
+    <link rel="stylesheet" th:href="@{/style/products.css}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main-content">
+            <div class="products-list">
+                <p>Hello Spring Boot!</p>
+                <form th:action="@{/add_product}" th:object="${product}" method="post">
+                    <div>
+                        <label for="productName">Add product</label>
+                        <input id="productName" th:field="*{productName}" type="text">
+                    </div>
+                    <div>
+                        <label for="productCount">Add count</label>
+                        <input id="productCount" th:field="*{productCount}" type="number">
+                    </div>
+                    <div>
+                        <label for="productDetails">Add count</label>
+                        <input id="productDetails" th:field="*{productDetails}" type="text">
+                    </div>
+                    <button type="submit" value="Submit">Add Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
