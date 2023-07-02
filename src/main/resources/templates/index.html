@@ -10,7 +10,10 @@
         <div class="main-content">
             <div class="products-list">
                 <p>Hello Spring Boot!</p>
-                <form th:action="@{/add_product}" th:object="${product}" method="post">
+                <ul th:each="product :${product_list}">
+                    <li th:text="${product.getProductName()}"></li>
+                </ul>
+                <form th:action="@{/add_product}" th:object="${product_input}" method="post">
                     <div>
                         <label for="productName">Add product</label>
                         <input id="productName" th:field="*{productName}" type="text">
