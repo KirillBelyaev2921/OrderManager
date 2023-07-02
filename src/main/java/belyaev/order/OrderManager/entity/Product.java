@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Product {
     private String productName;
-    private int productCount;
+    private int productAmount;
     private String productDetails;
 }
