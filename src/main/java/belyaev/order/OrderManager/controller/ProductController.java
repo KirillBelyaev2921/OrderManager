@@ -6,10 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class ProductController {
 
@@ -20,13 +16,18 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public String greeting(Model model) {
-        model.addAttribute("product_input", new Product());
+    public String productListPage(Model model) {
         model.addAttribute("product_list", productService.getAllProducts());
         return "index";
     }
 
-    @PostMapping("/add_product")
+    @GetMapping("/add_product")
+    public String addProductPage(Model model) {
+        model.addAttribute("product_input", new Product());
+        return "add_product";
+    }
+
+    @PostMapping("/add_product_post")
     public String addProduct(Product product, Model model) {
         System.out.println(product.getProductName() + " is here!");
         productService.addProduct(product);

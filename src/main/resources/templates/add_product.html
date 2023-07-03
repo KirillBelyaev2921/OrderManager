@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product to list</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="card m-4">
+        <div class="m-4">
+            <h3 class="text-center m-3">Add product into list</h3>
+            <form th:action="@{/add_product_post}" th:object="${product_input}" method="post">
+                <div class="row">
+                    <div class="col">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-control-label" for="productName">Product name</label>
+                            <input class="form-control" id="productName" th:field="*{productName}" type="text" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-control-label" for="productCount">Product amount</label>
+                            <input class="form-control" id="productCount" th:field="*{productAmount}" type="number" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-control-label" for="productDetails">Details (if needed)</label>
+                            <textarea class="form-control" id="productDetails" th:field="*{productDetails}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-success btn-block mt-5" type="submit">Add new product</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
