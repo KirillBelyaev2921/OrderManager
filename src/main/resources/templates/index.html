@@ -10,7 +10,7 @@
 <div class="container">
     <div class="card m-4">
         <h3 class="main-title text-center m-3">Product list</h3>
-        <table class="table table-bordered col-md-11 m-5">
+        <table class="table table-bordered col-md-11 mx-5">
             <thead>
             <tr>
                 <td>Product</td>
@@ -18,14 +18,19 @@
                 <td>Details</td>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="product :${product_list}">
-                <td th:text="${product.getProductName()}"></td>
-                <td th:text="${product.getProductAmount()}"></td>
-                <td th:text="${product.getProductDetails()}"></td>
-            </tr>
-            </tbody>
         </table>
+        <div th:each="category :${category_list}">
+            <h4 class="mx-5" th:text="${category.categoryName}"></h4>
+            <table class="table table-bordered col-md-11 mx-5">
+                <tbody>
+                <tr th:each="product :${category.getProducts()}">
+                    <td th:text="${product.getProductName()}"></td>
+                    <td th:text="${product.getProductAmount()}"></td>
+                    <td th:text="${product.getProductDetails()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <form th:action="@{/add_product}" method="get">
             <div class="col-md-4 text-center mb-4">
                 <button class="btn btn-outline-success btn-block" type="submit">Add new product</button>

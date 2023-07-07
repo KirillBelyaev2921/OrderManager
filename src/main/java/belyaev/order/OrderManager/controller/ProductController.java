@@ -23,7 +23,7 @@ public class ProductController {
 
     @GetMapping("/")
     public String productListPage(Model model) {
-        model.addAttribute("product_list", productService.getAllProducts());
+        model.addAttribute("category_list", categoryService.getAllCategories());
         return "index";
     }
 
