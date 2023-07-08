@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 @Controller
 public class ProductController {
 
@@ -35,9 +38,24 @@ public class ProductController {
 
     @PostMapping("/add_product_post")
     public String addProduct(Product product, Model model) {
-        System.out.println(product.getProductName() + " is here!");
         product.setCategoryOfProducts(categoryService.getMainCategory());
         productService.addProduct(product);
         return "redirect:/";
     }
+
+    @GetMapping("/update_product")
+    public String updateProductPage(@RequestParam("id") Long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product_id", id);
+        model.addAttribute("product_input", product);
+        return "update_product";
+    }
+
+    @PutMapping("/update_product_put")
+    public String updateProduct(Product product, Model model) {
+        product.setCategoryOfProducts(categoryService.getMainCategory());
+        productService.updateProduct(product);
+        return "redirect:/";
+    }
+
 }

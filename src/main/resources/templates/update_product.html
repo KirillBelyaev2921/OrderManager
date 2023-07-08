@@ -14,6 +14,8 @@
             <form th:action="@{/add_product_post}" th:object="${product_input}" method="post">
                 <div class="row">
                     <div class="col">
+                        <input class="form-control" id="productId" th:field="*{productId}" th:value="${product_id}"
+                               type="hidden">
                         <div class="col-md-12 mb-3">
                             <label class="form-control-label" for="productName">Product name</label>
                             <input class="form-control" id="productName" th:field="*{productName}" type="text">
@@ -22,7 +24,8 @@
                     <div class="col">
                         <div class="col-md-12 mb-3">
                             <label class="form-control-label" for="productCount">Product amount</label>
-                            <input class="form-control" id="productCount" th:field="*{productAmount}" type="number">
+                            <input class="form-control" id="productCount" th:field="*{productAmount}" type="number"
+                                   required>
                         </div>
                     </div>
                     <div class="col">

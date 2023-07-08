@@ -21,15 +21,23 @@
         </table>
         <div th:each="category :${category_list}">
             <h4 class="mx-5" th:text="${category.categoryName}"></h4>
-            <table class="table table-bordered col-md-11 mx-5">
-                <tbody>
-                <tr th:each="product :${category.getProducts()}">
-                    <td th:text="${product.getProductName()}"></td>
-                    <td th:text="${product.getProductAmount()}"></td>
-                    <td th:text="${product.getProductDetails()}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div th:each="product :${category.getProducts()}">
+                <div class="row">
+                    <form th:action="@{/update_product}" method="get">
+                        <button type="submit" class="btn btn-primary " th:name="id"
+                                th:value="${product.productId}"></button>
+                    </form>
+                    <table class="table table-bordered col-md-11 mx-3">
+                        <tbody>
+                        <tr>
+                            <td th:text="${product.getProductName()}"></td>
+                            <td th:text="${product.getProductAmount()}"></td>
+                            <td th:text="${product.getProductDetails()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <form th:action="@{/add_product}" method="get">
             <div class="col-md-4 text-center mb-4">
