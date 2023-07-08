@@ -58,4 +58,9 @@ public class ProductController {
         return "redirect:/";
     }
 
+    @GetMapping("/delete_product")
+    public String deleteProduct(@RequestParam("id") Long id, Model model) {
+        productService.deleteProduct(id);
+        return "redirect:/";
+    }
 }

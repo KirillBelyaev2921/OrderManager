@@ -27,6 +27,10 @@
                         <button type="submit" class="btn btn-primary " th:name="id"
                                 th:value="${product.productId}"></button>
                     </form>
+                    <form th:action="@{/delete_product}" method="get">
+                        <button type="submit" class="btn btn-primary btn-danger" th:name="id"
+                                th:value="${product.productId}" onClick="return confirm('Are you sure?')"></button>
+                    </form>
                     <table class="table table-bordered col-md-11 mx-3">
                         <tbody>
                         <tr>
