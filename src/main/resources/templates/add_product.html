@@ -11,7 +11,7 @@
     <div class="card m-4">
         <div class="m-4">
             <h3 class="text-center m-3">Add product into list</h3>
-            <form th:action="@{/add_product_post}" th:object="${product_input}" method="post">
+            <form th:action="@{/add_product}" th:object="${product_input}" method="post">
                 <div class="row">
                     <div class="col">
                         <div class="col-md-12 mb-3">
@@ -27,6 +27,17 @@
                     </div>
                     <div class="col">
                         <div class="col-md-12 mb-3">
+                            <label class="form-control-label" for="productCategory">Product amount</label>
+                            <select class="form-control" id="productCategory" th:field="*{categoryOfProducts}"
+                                    >
+                                <option th:each="category :${category_list}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="col-md-5 mb-3">
                             <label class="form-control-label" for="productDetails">Details (if needed)</label>
                             <textarea class="form-control" id="productDetails" th:field="*{productDetails}"></textarea>
                         </div>

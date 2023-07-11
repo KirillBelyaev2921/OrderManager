@@ -26,17 +26,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category getMainCategory() {
-        Optional<Category> mainCategory = categoryRepository.findById(1L);
-        if (mainCategory.isPresent()) {
-            return mainCategory.get();
-        } else {
-            Category category = new Category();
-            category.setCategoryName("Products");
-            categoryRepository.save(category);
-            return category;
-        }
-
+    public void setProductsCategory() {
+        Category category = new Category();
+        category.setCategoryName("Products");
+        categoryRepository.save(category);
     }
 
 }

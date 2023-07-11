@@ -33,12 +33,12 @@ public class ProductController {
     @GetMapping("/add_product")
     public String addProductPage(Model model) {
         model.addAttribute("product_input", new Product());
+        model.addAttribute("category_list", categoryService.getAllCategories());
         return "add_product";
     }
 
-    @PostMapping("/add_product_post")
+    @PostMapping("/add_product")
     public String addProduct(Product product, Model model) {
-        product.setCategoryOfProducts(categoryService.getMainCategory());
         productService.addProduct(product);
         return "redirect:/";
     }
@@ -46,14 +46,13 @@ public class ProductController {
     @GetMapping("/update_product")
     public String updateProductPage(@RequestParam("id") Long id, Model model) {
         Product product = productService.getProductById(id);
-        model.addAttribute("product_id", id);
         model.addAttribute("product_input", product);
+        model.addAttribute("category_list", categoryService.getAllCategories());
         return "update_product";
     }
 
-    @PutMapping("/update_product_put")
+    @PostMapping("/update_product_put")
     public String updateProduct(Product product, Model model) {
-        product.setCategoryOfProducts(categoryService.getMainCategory());
         productService.updateProduct(product);
         return "redirect:/";
     }
