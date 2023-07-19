@@ -27,13 +27,7 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         Optional<Product> oProduct = productRepository.findById(id);
-        if (oProduct.isPresent()) {
-            return oProduct.get();
-        } else {
-            Product product = new Product();
-            product.setProductId(id);
-            return product;
-        }
+        return oProduct.orElse(null);
     }
 
     public void updateProduct(Product product) {
