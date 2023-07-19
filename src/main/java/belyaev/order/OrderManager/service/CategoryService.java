@@ -1,6 +1,7 @@
 package belyaev.order.OrderManager.service;
 
 import belyaev.order.OrderManager.entity.Category;
+import belyaev.order.OrderManager.entity.Product;
 import belyaev.order.OrderManager.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,26 @@ public class CategoryService {
         Category category = new Category();
         category.setCategoryName("Products");
         categoryRepository.save(category);
+    }
+
+
+    public Category getCategoryById(Long id) {
+        Optional<Category> oCategory = categoryRepository.findById(id);
+        if (oCategory.isPresent()) {
+            return oCategory.get();
+        } else {
+            Category category = new Category();
+            category.setCategoryId(id);
+            return category;
+        }
+    }
+
+    public void updateCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CategoryController {
@@ -27,6 +28,26 @@ public class CategoryController {
     @PostMapping("/add_category")
     public String addCategory(Category category, Model model) {
         categoryService.addCategory(category);
+        return "redirect:/";
+    }
+
+    @GetMapping("/update_category")
+    public String updateProductPage(@RequestParam("id") Long id, Model model) {
+        Category category = categoryService.getCategoryById(id);
+        model.addAttribute("category_input", category);
+        model.addAttribute("category_list", categoryService.getAllCategories());
+        return "update_category";
+    }
+
+    @PostMapping("/update_category_put")
+    public String updateProduct(Category category, Model model) {
+        categoryService.updateCategory(category);
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete_category")
+    public String deleteProduct(@RequestParam("id") Long id, Model model) {
+        categoryService.deleteCategory(id);
         return "redirect:/";
     }
 }

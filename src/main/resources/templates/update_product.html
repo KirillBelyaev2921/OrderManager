@@ -14,8 +14,6 @@
             <form th:action="@{/update_product_put}" th:object="${product_input}" th:method="put">
                 <input class="form-control" th:field="*{productId}" th:value="${product_input.productId}"
                        type="hidden">
-<!--                <input class="form-control" th:field="*{categoryOfProducts.categoryId}" th:value="${product_input.categoryOfProducts.categoryId}"-->
-<!--                       type="hidden">-->
                 <div class="row">
                     <div class="col">
                         <div class="col-md-12 mb-3">
