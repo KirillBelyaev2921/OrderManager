@@ -12,7 +12,7 @@
         <h3 class="main-title text-center m-3">Product list</h3>
         <div th:each="category :${category_list}">
             <div class="row">
-                <h4 class="mx-5" th:text="${category.categoryName}"></h4>
+                <h4 class="mx-5 mb-4" th:text="${category.categoryName}"></h4>
                 <form th:action="@{/update_category}" method="get">
                     <button type="submit" class="btn btn-primary " th:name="id"
                             th:value="${category.categoryId}">Edit Category

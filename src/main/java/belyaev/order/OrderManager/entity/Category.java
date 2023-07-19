@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -18,10 +19,19 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
-    @Column(name="category_name", length=50, nullable=false)
+    @Column(name = "category_name", length = 50, nullable = false)
     private String categoryName;
 
     @OneToMany(targetEntity = Product.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_category_id")
     private List<Product> products;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryId=" + categoryId +
+                ", categoryName='" + categoryName + '\'' +
+                ", products=" + products.stream().map(Product::getProductName).collect(Collectors.joining()) +
+                '}';
+    }
 }
