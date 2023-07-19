@@ -8,40 +8,40 @@
 </head>
 <body class="bg-light">
 <div class="container">
-    <div class="card m-4">
+    <div class="card m-4 col-md-11">
         <h3 class="main-title text-center m-3">Product list</h3>
-        <table class="table table-bordered col-md-11 mx-5">
-            <thead>
-            <tr>
-                <td>Product</td>
-                <td>Amount</td>
-                <td>Details</td>
-            </tr>
-            </thead>
-        </table>
         <div th:each="category :${category_list}">
             <h4 class="mx-5" th:text="${category.categoryName}"></h4>
-            <div th:each="product :${category.getProducts()}">
-                <div class="row">
-                    <form th:action="@{/update_product}" method="get">
-                        <button type="submit" class="btn btn-primary " th:name="id"
-                                th:value="${product.productId}"></button>
-                    </form>
-                    <form th:action="@{/delete_product}" method="get">
-                        <button type="submit" class="btn btn-primary btn-danger" th:name="id"
-                                th:value="${product.productId}" onClick="return confirm('Are you sure?')"></button>
-                    </form>
-                    <table class="table table-bordered col-md-11 mx-3">
-                        <tbody>
-                        <tr>
-                            <td th:text="${product.getProductName()}"></td>
-                            <td th:text="${product.getProductAmount()}"></td>
-                            <td th:text="${product.getProductDetails()}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <table class="table table-bordered col-md-11 mx-5">
+                <thead>
+                <tr>
+                    <td width="10%">Edit</td>
+                    <td width="10%">Delete</td>
+                    <td width="20%">Product</td>
+                    <td width="20%">Amount</td>
+                    <td width="40%">Details</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product :${category.getProducts()}">
+                    <td>
+                        <form th:action="@{/update_product}" method="get">
+                            <button type="submit" class="btn btn-primary " th:name="id"
+                                    th:value="${product.productId}"></button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/delete_product}" method="get">
+                            <button type="submit" class="btn btn-primary btn-danger" th:name="id"
+                                    th:value="${product.productId}" onClick="return confirm('Are you sure?')"></button>
+                        </form>
+                    </td>
+                    <td th:text="${product.getProductName()}"></td>
+                    <td th:text="${product.getProductAmount()}"></td>
+                    <td th:text="${product.getProductDetails()}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <form th:action="@{/add_product}" method="get">
             <div class="col-md-4 text-center mb-4">
