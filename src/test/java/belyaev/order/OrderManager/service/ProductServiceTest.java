@@ -1,7 +1,9 @@
 package belyaev.order.OrderManager.service;
 
 import belyaev.order.OrderManager.OrderManagerApplication;
+import belyaev.order.OrderManager.entity.Category;
 import belyaev.order.OrderManager.entity.Product;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,6 @@ class ProductServiceTest {
         product.setCategoryOfProducts(categoryService.getCategoryById(1L));
         productService.addProduct(product);
 
-        System.out.println(productService.getAllProducts());
         Product expectedProduct = productService.getProductById(1L);
         assertNotNull(expectedProduct);
     }
@@ -60,32 +61,9 @@ class ProductServiceTest {
         assertEquals(productService.getAllProducts().get(0), product);
     }
 
-
     @Test
     @Transactional
     @Order(3)
-    void updateProductSetNewNameTest() {
-        Product product = new Product();
-        product.setProductName("Apple");
-        product.setProductAmount(5);
-        product.setProductDetails("det3");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
-        productService.addProduct(product);
-
-        Product updateProduct = productService.getProductById(3L);
-        updateProduct.setProductName("Fresh Milk");
-        productService.updateProduct(updateProduct);
-
-        Product expectedProduct = productService.getProductById(3L);
-        String expectedName = expectedProduct.getProductName();
-
-        assertEquals(expectedProduct, updateProduct);
-        assertEquals(expectedName, "Fresh Milk");
-    }
-
-    @Test
-    @Transactional
-    @Order(4)
     void deleteProductTest() {
         Product product = new Product();
         product.setProductName("Milk");
@@ -94,8 +72,104 @@ class ProductServiceTest {
         product.setCategoryOfProducts(categoryService.getCategoryById(1L));
         productService.addProduct(product);
 
+        assertEquals(productService.getProductById(3L), product);
+
         productService.deleteProduct(4L);
 
         assertNull(productService.getProductById(4L));
     }
+
+    @Test
+    @Transactional
+    @Order(4)
+    void updateProductSetNewNameTest() {
+        Product product = new Product();
+        product.setProductName("Apple");
+        product.setProductAmount(5);
+        product.setProductDetails("det3");
+        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        productService.addProduct(product);
+
+        Product updateProduct = productService.getProductById(4L);
+        updateProduct.setProductName("Fresh Milk");
+        productService.updateProduct(updateProduct);
+
+        Product expectedProduct = productService.getProductById(4L);
+        String expectedName = expectedProduct.getProductName();
+
+        assertEquals(expectedProduct, updateProduct);
+        assertEquals(expectedName, "Fresh Milk");
+    }
+
+    @Test
+    @Transactional
+    @Order(5)
+    void updateProductSetNewAmountTest() {
+        Product product = new Product();
+        product.setProductName("Apple");
+        product.setProductAmount(5);
+        product.setProductDetails("det3");
+        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        productService.addProduct(product);
+
+        Product updateProduct = productService.getProductById(5L);
+        updateProduct.setProductAmount(7);
+        productService.updateProduct(updateProduct);
+
+        Product expectedProduct = productService.getProductById(5L);
+        int expectedAmount = expectedProduct.getProductAmount();
+
+        assertEquals(expectedProduct, updateProduct);
+        assertEquals(expectedAmount, 7);
+    }
+
+    @Test
+    @Transactional
+    @Order(6)
+    void updateProductSetNewDetailsTest() {
+        Product product = new Product();
+        product.setProductName("Apple");
+        product.setProductAmount(5);
+        product.setProductDetails("det3");
+        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        productService.addProduct(product);
+
+        Product updateProduct = productService.getProductById(6L);
+        updateProduct.setProductDetails("Yummy!");
+        productService.updateProduct(updateProduct);
+
+        Product expectedProduct = productService.getProductById(6L);
+        String expectedDetails = expectedProduct.getProductDetails();
+
+        assertEquals(expectedProduct, updateProduct);
+        assertEquals(expectedDetails, "Yummy!");
+    }
+
+    @Test
+    @Transactional
+    @Order(7)
+    void updateProductSetNewCategoryTest() {
+        Product product = new Product();
+        product.setProductName("Apple");
+        product.setProductAmount(5);
+        product.setProductDetails("det3");
+        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        productService.addProduct(product);
+
+        Category category = new Category(
+                2L, "Food", null
+        );
+        categoryService.addCategory(category);
+
+        Product updateProduct = productService.getProductById(7L);
+        updateProduct.setCategoryOfProducts(categoryService.getCategoryById(2L));
+        productService.updateProduct(updateProduct);
+
+        Product expectedProduct = productService.getProductById(7L);
+        Category expectedCategory = expectedProduct.getCategoryOfProducts();
+
+        assertEquals(expectedProduct, updateProduct);
+        assertEquals(expectedCategory, category);
+    }
+
 }
