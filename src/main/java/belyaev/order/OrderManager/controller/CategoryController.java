@@ -32,7 +32,7 @@ public class CategoryController {
     }
 
     @GetMapping("/update_category")
-    public String updateProductPage(@RequestParam("id") Long id, Model model) {
+    public String updateCategoryPage(@RequestParam("id") Long id, Model model) {
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("category_input", category);
         model.addAttribute("category_list", categoryService.getAllCategories());
@@ -40,13 +40,13 @@ public class CategoryController {
     }
 
     @PostMapping("/update_category_put")
-    public String updateProduct(Category category, Model model) {
+    public String updateCategory(Category category, Model model) {
         categoryService.updateCategory(category);
         return "redirect:/";
     }
 
     @GetMapping("/delete_category")
-    public String deleteProduct(@RequestParam("id") Long id, Model model) {
+    public String deleteCategory(@RequestParam("id") Long id, Model model) {
         categoryService.deleteCategory(id);
         return "redirect:/";
     }

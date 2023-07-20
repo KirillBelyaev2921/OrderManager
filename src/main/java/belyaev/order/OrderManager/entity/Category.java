@@ -31,7 +31,7 @@ public class Category {
         return "Category{" +
                 "categoryId=" + categoryId +
                 ", categoryName='" + categoryName + '\'' +
-                ", products=" + products.stream().map(Product::getProductName).collect(Collectors.joining()) +
+                ", products=" + products +
                 '}';
     }
 }

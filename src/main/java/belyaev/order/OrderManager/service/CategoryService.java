@@ -36,13 +36,7 @@ public class CategoryService {
 
     public Category getCategoryById(Long id) {
         Optional<Category> oCategory = categoryRepository.findById(id);
-        if (oCategory.isPresent()) {
-            return oCategory.get();
-        } else {
-            Category category = new Category();
-            category.setCategoryId(id);
-            return category;
-        }
+        return oCategory.orElse(null);
     }
 
     public void updateCategory(Category category) {

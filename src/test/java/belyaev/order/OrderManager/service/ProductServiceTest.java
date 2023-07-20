@@ -3,7 +3,6 @@ package belyaev.order.OrderManager.service;
 import belyaev.order.OrderManager.OrderManagerApplication;
 import belyaev.order.OrderManager.entity.Category;
 import belyaev.order.OrderManager.entity.Product;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -157,12 +156,12 @@ class ProductServiceTest {
         productService.addProduct(product);
 
         Category category = new Category(
-                2L, "Food", null
+                6L, "Food", null
         );
         categoryService.addCategory(category);
 
         Product updateProduct = productService.getProductById(7L);
-        updateProduct.setCategoryOfProducts(categoryService.getCategoryById(2L));
+        updateProduct.setCategoryOfProducts(categoryService.getCategoryById(6L));
         productService.updateProduct(updateProduct);
 
         Product expectedProduct = productService.getProductById(7L);

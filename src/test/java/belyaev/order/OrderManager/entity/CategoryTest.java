@@ -16,6 +16,6 @@ class CategoryTest {
         category.setProducts(List.of(product));
 
         assertEquals(product.toString(), "Product{productId=1, productName='Milk', productAmount=1, productDetails='Yummy', categoryOfProducts=Products}");
-        assertEquals(category.toString(), "Category{categoryId=1, categoryName='Products', products=Milk}");
+        assertEquals(category.toString(), "Category{categoryId=1, categoryName='Products', products=[Product{productId=1, productName='Milk', productAmount=1, productDetails='Yummy', categoryOfProducts=Products}]}");
     }
 }
