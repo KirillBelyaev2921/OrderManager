@@ -19,9 +19,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Column(name = "username", length = 50, nullable = false)
+    @Column(name = "username")
     private String username;
-    @Column(name = "password", length = 10, nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Transient
