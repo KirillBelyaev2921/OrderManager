@@ -35,8 +35,8 @@ public class CategoryService {
 
 
     public Category getCategoryById(Long id) {
-        Optional<Category> oCategory = categoryRepository.findById(id);
-        return oCategory.orElse(null);
+        Optional<Category> categoryFromDb = categoryRepository.findById(id);
+        return categoryFromDb.orElse(null);
     }
 
     public void updateCategory(Category category) {
