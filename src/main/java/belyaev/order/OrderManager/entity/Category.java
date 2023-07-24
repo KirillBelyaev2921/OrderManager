@@ -1,5 +1,6 @@
 package belyaev.order.OrderManager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,11 @@ public class Category {
     @OneToMany(targetEntity = Product.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_category_id")
     private List<Product> products;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_category_id", nullable = false)
+    @JsonIgnore
+    private User userCategories;
 
     @Override
     public String toString() {

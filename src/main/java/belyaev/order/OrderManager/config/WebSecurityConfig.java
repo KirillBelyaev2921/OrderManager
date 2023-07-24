@@ -36,6 +36,12 @@ public class WebSecurityConfig  {
                                 .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated()
                         )
+                .formLogin(form -> form
+                        .loginPage("/login.html")
+                        .loginProcessingUrl("/perform_login")
+                        .defaultSuccessUrl("/"))
+                .logout(auth -> auth
+                        .logoutUrl("/perform_logout"))
                 .build();
     }
 

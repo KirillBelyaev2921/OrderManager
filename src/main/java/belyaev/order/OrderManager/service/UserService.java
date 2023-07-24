@@ -57,6 +57,7 @@ public class UserService implements UserDetailsService {
 
         user.setRoles(Collections.singleton(new Role(1L, "USER_ROLE")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setCategories(null);
         userRepository.save(user);
         return true;
     }

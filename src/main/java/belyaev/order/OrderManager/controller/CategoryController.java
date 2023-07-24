@@ -2,8 +2,11 @@ package belyaev.order.OrderManager.controller;
 
 import belyaev.order.OrderManager.entity.Category;
 import belyaev.order.OrderManager.entity.Product;
+import belyaev.order.OrderManager.entity.User;
 import belyaev.order.OrderManager.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,9 @@ public class CategoryController {
 
     @PostMapping("/add_category")
     public String addCategory(Category category, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        category.setUserCategories(user);
         categoryService.addCategory(category);
         return "redirect:/";
     }

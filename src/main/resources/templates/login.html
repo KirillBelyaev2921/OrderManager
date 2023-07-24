@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add product to list</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+<div class="container">
+  <div class="card m-4">
+    <div class="m-4">
+      <h3 class="text-center m-3">Login</h3>
+      <form th:action="@{/perform_login}" th:object="${user_input}" th:method="put">
+        <div class="col">
+          <div class="col-md-5 mb-3">
+            <label class="form-control-label" for="userName">UserName</label>
+            <input class="form-control" id="userName" th:field="*{username}" type="text">
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-md-5 mb-3">
+            <label class="form-control-label" for="userPassword">Password</label>
+            <input class="form-control" id="userPassword" th:field="*{password}" type="password">
+          </div>
+        </div>
+        <button class="btn btn-outline-success btn-block mt-5" type="submit">Register now</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
