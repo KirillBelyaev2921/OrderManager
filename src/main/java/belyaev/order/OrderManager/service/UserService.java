@@ -1,7 +1,9 @@
 package belyaev.order.OrderManager.service;
 
+import belyaev.order.OrderManager.entity.Category;
 import belyaev.order.OrderManager.entity.Role;
 import belyaev.order.OrderManager.entity.User;
+import belyaev.order.OrderManager.repository.CategoryRepository;
 import belyaev.order.OrderManager.repository.RoleRepository;
 import belyaev.order.OrderManager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,15 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
+    private final CategoryRepository categoryRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, CategoryRepository categoryRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.categoryRepository = categoryRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -57,8 +62,11 @@ public class UserService implements UserDetailsService {
 
         user.setRoles(Collections.singleton(new Role(1L, "USER_ROLE")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setCategories(null);
+        Category category = new Category();
+        category.setCategoryName("Products");
+        category.setUserCategories(user);
         userRepository.save(user);
+        categoryRepository.save(category);
         return true;
     }
 

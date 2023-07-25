@@ -2,11 +2,8 @@ package belyaev.order.OrderManager.service;
 
 import belyaev.order.OrderManager.OrderManagerApplication;
 import belyaev.order.OrderManager.entity.Category;
-import belyaev.order.OrderManager.entity.Product;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import belyaev.order.OrderManager.entity.User;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,11 +21,23 @@ class CategoryServiceTest {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final UserService userService;
+    private User user;
 
     @Autowired
-    public CategoryServiceTest(ProductService productService, CategoryService categoryService) {
+    public CategoryServiceTest(ProductService productService, CategoryService categoryService, UserService userService) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.userService = userService;
+    }
+
+    @BeforeEach
+    void setUp() {
+        user = new User();
+        user.setUsername("UserName");
+        user.setPassword("1234");
+        user.setPasswordConfirm("1234");
+        userService.addUser(user);
     }
 
     @Test
@@ -43,61 +52,55 @@ class CategoryServiceTest {
     @Transactional
     @Order(2)
     void addCategory() {
-        Category category = new Category(
-                2L, "Food", new ArrayList<>()
-        );
-        categoryService.addCategory(category);
-        Category expectedCategory = categoryService.getCategoryById(2L);
+        Category category = new Category();
+        category.setCategoryName("Food");
+        category.setUserCategories(user);
 
-        assertEquals(expectedCategory.getCategoryName(), category.getCategoryName());
+        assertNull(categoryService.getCategoryByNameAndUser("Food", user));
+
+        categoryService.addCategory(category);
+        assertNotNull(categoryService.getCategoryByNameAndUser("Food", user));
+
     }
 
     @Test
     @Transactional
     @Order(3)
-    void getAllCategories() {
-        Category category = new Category(
-                3L, "Food", null
-        );
-        categoryService.addCategory(category);
-
-        List<Category> categories = categoryService.getAllCategories();
+    void getAllCategoriesByUser() {
+        List<Category> categories = categoryService.getAllCategoriesByUser(user);
 
         assertEquals(categories.get(0).getCategoryName(), "Products");
-        assertEquals(categories.get(1).getCategoryName(), category.getCategoryName());
     }
 
     @Test
     @Transactional
     @Order(4)
     void updateCategory() {
-        Category category = new Category(
-                4L, "Food", null
-        );
+        Category category = new Category();
+        category.setCategoryName("Food2");
+        category.setUserCategories(user);
+
         categoryService.addCategory(category);
 
-        assertEquals(categoryService.getCategoryById(4L).getCategoryName(), category.getCategoryName());
-
-        Category updateCategory = categoryService.getCategoryById(4L);
+        Category updateCategory = categoryService.getCategoryByNameAndUser("Food2", user);
         updateCategory.setCategoryName("Technics");
         categoryService.updateCategory(updateCategory);
 
-        assertEquals(categoryService.getCategoryById(4L).getCategoryName(), updateCategory.getCategoryName());
+        assertNull(categoryService.getCategoryByNameAndUser("Food2", user));
+        assertNotNull(categoryService.getCategoryByNameAndUser("Technics", user));
     }
 
     @Test
     @Transactional
     @Order(5)
     void deleteCategory() {
-        Category category = new Category(
-                5L, "Food", null
-        );
+        Category category = new Category();
+        category.setCategoryName("Technics");
+        category.setUserCategories(user);
         categoryService.addCategory(category);
 
-        assertEquals(categoryService.getCategoryById(5L).getCategoryName(), category.getCategoryName());
+        categoryService.deleteCategory(categoryService.getCategoryByNameAndUser("Technics", user).getCategoryId());
 
-        categoryService.deleteCategory(5L);
-
-        assertNull(categoryService.getCategoryById(5L));
+        assertNull(categoryService.getCategoryByNameAndUser("Technics", user));
     }
 }

@@ -38,6 +38,7 @@ public class Category {
                 "categoryId=" + categoryId +
                 ", categoryName='" + categoryName + '\'' +
                 ", products=" + products +
+                ", user=" + userCategories.getUserId() +
                 '}';
     }
 }

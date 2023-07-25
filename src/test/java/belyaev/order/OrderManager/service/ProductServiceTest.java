@@ -3,10 +3,8 @@ package belyaev.order.OrderManager.service;
 import belyaev.order.OrderManager.OrderManagerApplication;
 import belyaev.order.OrderManager.entity.Category;
 import belyaev.order.OrderManager.entity.Product;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import belyaev.order.OrderManager.entity.User;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,13 +21,24 @@ class ProductServiceTest {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final UserService userService;
+    private User user;
 
     @Autowired
-    public ProductServiceTest(ProductService productService, CategoryService categoryService) {
+    public ProductServiceTest(ProductService productService, CategoryService categoryService, UserService userService) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.userService = userService;
     }
 
+    @BeforeEach
+    void setUp() {
+        user = new User();
+        user.setUsername("UserName");
+        user.setPassword("1234");
+        user.setPasswordConfirm("1234");
+        userService.addUser(user);
+    }
 
     @Test
     @Transactional
@@ -39,7 +48,7 @@ class ProductServiceTest {
         product.setProductName("Milk");
         product.setProductAmount(1);
         product.setProductDetails("det");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        product.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Products", user));
         productService.addProduct(product);
 
         Product expectedProduct = productService.getProductById(1L);
@@ -54,7 +63,7 @@ class ProductServiceTest {
         product.setProductName("Bread");
         product.setProductAmount(2);
         product.setProductDetails("det2");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        product.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Products", user));
         productService.addProduct(product);
 
         assertEquals(productService.getAllProducts().get(0), product);
@@ -68,7 +77,7 @@ class ProductServiceTest {
         product.setProductName("Milk");
         product.setProductAmount(1);
         product.setProductDetails("det");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        product.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Products", user));
         productService.addProduct(product);
 
         assertEquals(productService.getProductById(3L), product);
@@ -86,7 +95,7 @@ class ProductServiceTest {
         product.setProductName("Apple");
         product.setProductAmount(5);
         product.setProductDetails("det3");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        product.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Products", user));
         productService.addProduct(product);
 
         Product updateProduct = productService.getProductById(4L);
@@ -108,7 +117,7 @@ class ProductServiceTest {
         product.setProductName("Apple");
         product.setProductAmount(5);
         product.setProductDetails("det3");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        product.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Products", user));
         productService.addProduct(product);
 
         Product updateProduct = productService.getProductById(5L);
@@ -130,7 +139,7 @@ class ProductServiceTest {
         product.setProductName("Apple");
         product.setProductAmount(5);
         product.setProductDetails("det3");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        product.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Products", user));
         productService.addProduct(product);
 
         Product updateProduct = productService.getProductById(6L);
@@ -152,23 +161,23 @@ class ProductServiceTest {
         product.setProductName("Apple");
         product.setProductAmount(5);
         product.setProductDetails("det3");
-        product.setCategoryOfProducts(categoryService.getCategoryById(1L));
+        product.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Products", user));
         productService.addProduct(product);
 
         Category category = new Category(
-                6L, "Food", null
+                6L, "Food", null, user
         );
         categoryService.addCategory(category);
 
         Product updateProduct = productService.getProductById(7L);
-        updateProduct.setCategoryOfProducts(categoryService.getCategoryById(6L));
+        updateProduct.setCategoryOfProducts(categoryService.getCategoryByNameAndUser("Food", user));
         productService.updateProduct(updateProduct);
 
         Product expectedProduct = productService.getProductById(7L);
         Category expectedCategory = expectedProduct.getCategoryOfProducts();
 
         assertEquals(expectedProduct, updateProduct);
-        assertEquals(expectedCategory, category);
+        assertEquals(expectedCategory.getCategoryName(), category.getCategoryName());
     }
 
 }

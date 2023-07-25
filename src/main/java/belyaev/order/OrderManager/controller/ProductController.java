@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class ProductController {
+public class ProductController extends UserAuthController {
 
 
     private final CategoryService categoryService;
@@ -25,14 +25,14 @@ public class ProductController {
 
     @GetMapping("/")
     public String productListPage(Model model) {
-        model.addAttribute("category_list", categoryService.getAllCategories());
+        model.addAttribute("category_list", categoryService.getAllCategoriesByUser(getAuthUser()));
         return "index";
     }
 
     @GetMapping("/add_product")
     public String addProductPage(Model model) {
         model.addAttribute("product_input", new Product());
-        model.addAttribute("category_list", categoryService.getAllCategories());
+        model.addAttribute("category_list", categoryService.getAllCategoriesByUser(getAuthUser()));
         return "add_product";
     }
 
@@ -46,7 +46,7 @@ public class ProductController {
     public String updateProductPage(@RequestParam("id") Long id, Model model) {
         Product product = productService.getProductById(id);
         model.addAttribute("product_input", product);
-        model.addAttribute("category_list", categoryService.getAllCategories());
+        model.addAttribute("category_list", categoryService.getAllCategoriesByUser(getAuthUser()));
         return "update_product";
     }
 

@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @OneToMany(targetEntity = Product.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Category.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_category_id")
     private List<Category> categories;
 

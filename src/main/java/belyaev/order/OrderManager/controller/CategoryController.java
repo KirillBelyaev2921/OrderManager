@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class CategoryController {
+public class CategoryController extends UserAuthController{
     private final CategoryService categoryService;
 
     @Autowired
@@ -30,18 +30,17 @@ public class CategoryController {
 
     @PostMapping("/add_category")
     public String addCategory(Category category, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        category.setUserCategories(user);
+        category.setUserCategories(getAuthUser());
         categoryService.addCategory(category);
         return "redirect:/";
     }
 
     @GetMapping("/update_category")
     public String updateCategoryPage(@RequestParam("id") Long id, Model model) {
+
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("category_input", category);
-        model.addAttribute("category_list", categoryService.getAllCategories());
+        model.addAttribute("category_list", categoryService.getAllCategoriesByUser(getAuthUser()));
         return "update_category";
     }
 
@@ -56,4 +55,5 @@ public class CategoryController {
         categoryService.deleteCategory(id);
         return "redirect:/";
     }
+
 }
